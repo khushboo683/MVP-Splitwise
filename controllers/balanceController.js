@@ -11,7 +11,7 @@ export const getBalance = async (req, res) => {
                 path: 'expenses',
                 populate: {
                     path: 'members',
-                    model: 'User' // Ensure the model name matches your User model
+                    model: 'User' 
                 }
             });
 

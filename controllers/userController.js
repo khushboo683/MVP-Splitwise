@@ -8,6 +8,7 @@ export const createUser = async(req,res)=>{
       if(user){
         res.status(400).json('User already registered.')
       }
+     // hashing the password before saving it in the db for security purpose. 
      const salt = await bcrypt.genSalt(10);
      const hash = await bcrypt.hash(password,salt);
      user = new User({
@@ -47,6 +48,7 @@ export const updateProfile = async(req,res)=>{
     }
 }
 
+// Need to handle delete user logic. Here I'm assuming we just need to delete the user from the db and not caring about the user's past expense with other users.
 export const deleteProfile = async(req,res)=>{
     try{
      const{userId} = req.params;
