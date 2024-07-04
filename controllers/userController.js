@@ -23,8 +23,8 @@ export const createUser = async(req,res)=>{
 }
 export const getProfile = async(req,res)=>{
     try{
-    const{id} = req.user;
-    const user = await User.findById(id);
+    const{userId} = req.params;
+    const user = await User.findById(userId);
     if(!user){
         res.status(400).json('User does not exists.')
     }
@@ -36,13 +36,26 @@ export const getProfile = async(req,res)=>{
 export const updateProfile = async(req,res)=>{
     try{
       const { email, currency} = req.body;
-      const{id} = req.user;
-      const user = await User.findByIdAndUpdate(id,{email,currency},{new:true});
+      const{userId} = req.params;
+      const user = await User.findByIdAndUpdate(userId,{email,currency},{new:true});
       if(!user){
         res.status(400).json('User does not exists.')
       }
       res.status(201).json(user);
     }catch(err){
         res.status(500).json(err);
+    }
+}
+
+export const deleteProfile = async(req,res)=>{
+    try{
+     const{userId} = req.params;
+     const user = await User.findByIdAndDelete(userId);
+     if(!user){
+        res.status(400).json('User does not exists');
+     }
+     res.status(201).json('Deleted successfully');
+    }catch(err){
+      res.status(500).json(err);
     }
 }
